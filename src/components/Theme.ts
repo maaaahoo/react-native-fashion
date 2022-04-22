@@ -17,6 +17,7 @@ export const theme = createTheme({
     danger: '#FF0058',
     text: 'rgba(12, 13, 52, 0.7)',
     background: palette.white,
+    white: palette.white,
     grey: 'rgba(12, 13, 52, 0.05)',
     darkGrey: '#808080',
     lightGrey: '#FAFAFA',

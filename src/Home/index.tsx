@@ -4,6 +4,7 @@ import OutfitIdeas from './OutfitIdeas';
 import DrawerContent, {DRAWER_WIDTH} from './Drawer';
 import FavoriteOutfits from './FavoriteOutfits';
 import TransactionHistory from './TransactionHistory';
+import EditProfile from './EditProfile';
 
 const Drawer = createDrawerNavigator();
 const HomeNavigation = () => {
@@ -20,6 +21,7 @@ const HomeNavigation = () => {
       <Drawer.Screen name="OutfitIdeas" component={OutfitIdeas} />
       <Drawer.Screen name="FavoriteOutfits" component={FavoriteOutfits} />
       <Drawer.Screen name="TransactionHistory" component={TransactionHistory} />
+      <Drawer.Screen name="EditProfile" component={EditProfile} />
     </Drawer.Navigator>
   )
 }
