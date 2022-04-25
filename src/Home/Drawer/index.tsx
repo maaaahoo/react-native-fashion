@@ -52,7 +52,7 @@ const items = [
   {
     icon: 'settings',
     label: 'Notifications Settings',
-    screen: 'NotificationsSettings',
+    screen: 'Settings',
     color: 'violet'
   },
   {
