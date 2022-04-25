@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import {ScrollView, Image, StyleSheet, Dimensions} from 'react-native';
+import {ScrollView, Dimensions} from 'react-native';
 import Header from '../../components/Header';
 import { Box, Text, useTheme } from '../../components/Theme';
 import TopCurve from './TopCurve';
 import Graph, {Point} from './Graph';
 import Transaction from './Transaction';
+import ScrollContent from '../../components/ScollContent';
 const minDate = new Date('2019-09-01').getTime();
 const maxDate = new Date('2020-03-01').getTime();
 
@@ -41,7 +42,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = props => {
   const theme = useTheme();
 
   return (
-    <Box flex={1} backgroundColor="background">
+    <ScrollContent>
       <Header
         title="Outfit Ideas"
         left={{
@@ -74,25 +75,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = props => {
           ))}
         </ScrollView>
       </Box>
-      <TopCurve {...{footerHeight}} />
-      <Box
-        position="absolute"
-        left={0}
-        right={0}
-        bottom={0}
-        height={footerHeight}
-      >
-        <Image 
-          style={{
-            ...StyleSheet.absoluteFillObject,
-            width: undefined,
-            height: undefined,
-            borderTopLeftRadius: theme.borderRadii.xl
-          }} 
-          source={require('../../assets/pattern3.png')}
-        />
-      </Box>
-    </Box>
+    </ScrollContent>
   )
 };
 
