@@ -48,7 +48,7 @@ const OutfitIdeas: React.FC<OutfitIdeasProps> = props => {
       }}
       right={{
         icon: 'shopping-bag',
-        onPress: () => {}
+        onPress: () => navigation.navigate('Cart')
       }}
       dark={false}
     />
@@ -62,7 +62,6 @@ const OutfitIdeas: React.FC<OutfitIdeasProps> = props => {
           source={source}
           position={interpolate(index, [currentIndex, cards.length - 1], [0, 1])}
           onSwipe={() => {
-            console.log('121212删除');
             setCurentIndex(pre => pre + 1);
           }}
         />
