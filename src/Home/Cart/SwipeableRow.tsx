@@ -1,7 +1,7 @@
 import React, { useRef, useCallback } from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import { PanGestureHandler, State } from 'react-native-gesture-handler';
-import Animated, { runOnJS, Transition, Transitioning, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import Animated, { runOnJS, Transition, Transitioning, useAnimatedGestureHandler, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { snapPoint } from 'react-native-redash';
 import {LinearGradient} from 'expo-linear-gradient';
 import { Box, useTheme } from '../../components/Theme';
@@ -9,6 +9,7 @@ import RoundedIconButton from '../../components/RoundedIconButton';
 
 interface SwipeableRowProps {
   onDelete: () => void;
+  height: number;
 };
 
 const {width} = Dimensions.get("window");
@@ -18,20 +19,13 @@ const snapPoints = [-85 * aspectRatio, 0 , finalDest];
 
 
 const SwipeableRow: React.FC<SwipeableRowProps> = props => {
-  const {children, onDelete} = props;
+  const {children, onDelete, height: defaultHeight} = props;
 
   const theme = useTheme();
   const translateX = useSharedValue(0);
-  const transition = (
-    <Transition.Together>
-      <Transition.Out type="fade" />
-      <Transition.In type="fade" />
-    </Transition.Together>
-  );
-  const ref = useRef();
+  const height = useSharedValue(defaultHeight);
 
   const deleteItem = useCallback(() => {
-    ref.current?.animateNextTransition();
     onDelete && onDelete();
   }, [onDelete]);
 
@@ -51,8 +45,7 @@ const SwipeableRow: React.FC<SwipeableRowProps> = props => {
         },
         () => {
           if (dest === finalDest) {
-            console.log('finalDest');
-            runOnJS(deleteItem)();
+            height.value = withTiming(0, {duration: 250}, () => runOnJS(deleteItem)());
           }
         }
       )
@@ -60,6 +53,7 @@ const SwipeableRow: React.FC<SwipeableRowProps> = props => {
   })
 
   const style = useAnimatedStyle(() => ({
+    height: height.value,
     backgroundColor: 'white',
     transform: [{
       translateX: translateX.value
@@ -75,7 +69,7 @@ const SwipeableRow: React.FC<SwipeableRowProps> = props => {
   }));
 
   return (
-    <Transitioning.View ref={ref} transition={transition}>
+    <View>
       <Animated.View style={[{
         ...StyleSheet.absoluteFillObject,
       }, deleteStyle]}>
@@ -128,7 +122,7 @@ const SwipeableRow: React.FC<SwipeableRowProps> = props => {
           {children}
         </Animated.View>
       </PanGestureHandler>
-    </Transitioning.View>
+    </View>
   )
 };
 

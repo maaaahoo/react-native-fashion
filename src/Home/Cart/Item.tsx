@@ -11,11 +11,10 @@ const Item: React.FC<ItemProps> = props => {
   const {onDelete} = props;
   const theme = useTheme();
 
+  const height = 120 + theme.spacing.m * 2;
+
   return (
-    <SwipeableRow onDelete={() => {
-      console.log('SwipeableRow')
-      onDelete();
-    }}>
+    <SwipeableRow onDelete={onDelete} height={height}>
       <Box padding="m" flexDirection="row">
         <Box style={{
           width: 120,
