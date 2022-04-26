@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import { Box, useTheme, Text } from '../../components/Theme';
 import CartContainer from './CartContainer';
 import Item from './Item';
+import Checkout from './Checkout';
 
 const {width} = Dimensions.get("window");
 const aspectRatio = width / 375;
@@ -22,7 +23,7 @@ const Cart: React.FC<CartProps> = props => {
   const [items, setItems] = useState(defaultItem);
 
   return (
-    <CartContainer>
+    <CartContainer CheckoutComponent={Checkout}>
       <Box backgroundColor="primary">
         <Header
           left={{

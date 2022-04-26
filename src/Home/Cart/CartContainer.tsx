@@ -10,10 +10,11 @@ const height = 682 * width / 375;
 const aspectRatio = width / 375;
 
 interface CartContainerProps {
+  CheckoutComponent: React.ReactNode;
 };
 
 const CartContainer: React.FC<CartContainerProps> = props => {
-  const {children} = props;
+  const {children, CheckoutComponent} = props;
   const theme = useTheme();
   const minHeight = 228 * width / 375;
   const translateY = useSharedValue(0);
@@ -40,7 +41,8 @@ const CartContainer: React.FC<CartContainerProps> = props => {
   });
 
   return (
-    <Box flex={1} backgroundColor="secondary">
+    <Box flex={1}>
+      <CheckoutComponent minHeight={minHeight} />
       <PanGestureHandler
         onGestureEvent={onGestureEvent}
       >
