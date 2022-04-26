@@ -16,9 +16,13 @@ const RoundedIcon: React.FC<RoundedIconProps> = props => {
   return (
     <Box 
       height={size} 
-      width={size} 
+      width={size}
       justifyContent='center'
       alignItems='center'
+      {...{backgroundColor}}
+      style={{
+        borderRadius: size/2
+      }}
     >
       <Text style={{ width: iconSize, height: iconSize }} {...{color}}>
       <Icon {...{name}} size={iconSize} style={{ textAlign: 'center' }} />
