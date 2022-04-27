@@ -3,11 +3,12 @@ import {Box} from '../../components/Theme';
 import Header from '../../components/Header';
 import Background from './Background';
 import Card from './Card';
-import {interpolate} from 'react-native-reanimated';
+import {interpolate, sub, useDerivedValue} from 'react-native-reanimated';
 import {
   useTransition,
 } from "react-native-redash/lib/module/v1";
 import Categories from './Categories';
+import { useTiming } from 'react-native-redash';
 
 const cards = [
   {
@@ -33,10 +34,12 @@ const cards = [
 interface OutfitIdeasProps {
 };
 
+const step = 1 / (cards.length - 1);
+
 const OutfitIdeas: React.FC<OutfitIdeasProps> = props => {
   const {navigation} = props;
   const [currentIndex, setCurentIndex] = useState(0);
-  const aIndex = useTransition(currentIndex);
+  const aIndex = useTiming(currentIndex);
 
   return (
    <Box flex={1} backgroundColor="background">
@@ -56,13 +59,16 @@ const OutfitIdeas: React.FC<OutfitIdeasProps> = props => {
     <Box flex={1}>
       <Background />
       { cards.map(({index, source}) => {
-        if (index >= currentIndex) {
+        if (currentIndex < index * step + step) {
           return <Card 
           key={index}
           source={source}
-          position={interpolate(index, [currentIndex, cards.length - 1], [0, 1])}
+          index={index + 1}
+          aIndex={aIndex}
+          step={step}
           onSwipe={() => {
-            setCurentIndex(pre => pre + 1);
+            console.log(step);
+            setCurentIndex(pre => pre + step);
           }}
         />
         }
